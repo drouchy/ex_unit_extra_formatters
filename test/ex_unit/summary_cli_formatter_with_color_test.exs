@@ -11,6 +11,9 @@ defmodule ExUnit.SummaryCLIFormatterWithColorsTest do
   end
 
   # event :suite_started
+  test "retuns :ok" do
+    {:ok, default_config} = Formatter.handle_event({:suite_started, []}, default_config)
+  end
 
   # event :suite_finished
 

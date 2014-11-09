@@ -15,6 +15,10 @@ defmodule ExUnit.SummaryCLIFormatter do
     {:ok , config}
   end
 
+  def handle_event({:suite_started, opts}, config) do
+    {:ok, config}
+  end
+
   def handle_event({:test_finished, %ExUnit.Test{state: nil} = test}, config) do
     write_success(".", config)
     {:ok, config}
