@@ -19,8 +19,25 @@ defmodule ExUnit.SummaryCLIFormatter do
     {:ok, config}
   end
 
+  def handle_event({:suite_finished, _run_us, _load_us}, _config) do
+    :remove_handler
+  end
+
+  def handle_event({:case_started, _test_case}, config) do
+    {:ok, config}
+  end
+
+  def handle_event({:case_finished, _test_case}, config) do
+    {:ok, config}
+  end
+
   def handle_event({:test_finished, %ExUnit.Test{state: nil} = test}, config) do
     write_success(".", config)
+    {:ok, config}
+  end
+
+  def handle_event({:test_started, _test}, config) do
+    # if config.trace, do: IO.write "  * #{trace_test_name test}"
     {:ok, config}
   end
 

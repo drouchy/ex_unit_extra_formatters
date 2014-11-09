@@ -10,15 +10,6 @@ defmodule ExUnit.SummaryCLIFormatterWithColorsTest do
     {:ok, %{colors: [enabled: true]}} = Formatter.init([colors: [enabled: true]])
   end
 
-  # event :suite_started
-  test "retuns :ok" do
-    {:ok, default_config} = Formatter.handle_event({:suite_started, []}, default_config)
-  end
-
-  # event :suite_finished
-
-  # event :test_started
-
   # event :test_finished
   test "writes a green dot for a success" do
     output = capture_io fn ->

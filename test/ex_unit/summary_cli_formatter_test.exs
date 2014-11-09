@@ -19,10 +19,29 @@ defmodule ExUnit.SummaryCLIFormatterTest do
   end
 
   # event :suite_started
+  test ":suite_started returns the config" do
+    {:ok, default_config} = Formatter.handle_event({:suite_started, []}, default_config)
+  end
 
   # event :suite_finished
+  test ":suite_finished returns :remove_handler" do
+    :remove_handler = Formatter.handle_event({:suite_finished, 0, 0}, default_config)
+  end
 
   # event :test_started
+  test ":test_started returns the config" do
+    {:ok, default_config} = Formatter.handle_event({:test_started, nil}, default_config)
+  end
+
+  # event :case_started
+  test ":case_started returns the config" do
+    {:ok, default_config} = Formatter.handle_event({:case_started, nil}, default_config)
+  end
+
+  # event :case_finished
+  test ":case_finished returns the config" do
+    {:ok, default_config} = Formatter.handle_event({:case_finished, nil}, default_config)
+  end
 
   # event :test_finished
   test "writes a dot for a success" do
