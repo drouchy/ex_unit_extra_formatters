@@ -75,6 +75,21 @@ defmodule ExUnit.SummaryCLIFormatterTest do
     end
   end
 
+  test "writes a question mark for an invalid" do
+    output = capture_io fn ->
+      Formatter.handle_event({:test_finished, %ExUnit.Test{state: {:invalid, nil}}}, default_config)
+    end
+
+    assert output == "?"
+  end
+
+  test "does not change the config for an invalid" do
+    capture_io fn ->
+      {:ok, new_config} = Formatter.handle_event({:test_finished, %ExUnit.Test{state: {:invalid, nil}}}, default_config)
+      assert new_config == default_config
+    end
+  end
+
   test "writes a F for a failure" do
     output = capture_io fn ->
       Formatter.handle_event({:test_finished, %ExUnit.Test{state: {:failed, nil}}}, default_config)

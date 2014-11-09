@@ -31,18 +31,22 @@ defmodule ExUnit.SummaryCLIFormatter do
     {:ok, config}
   end
 
+  def handle_event({:test_started, _test}, config) do
+    {:ok, config}
+  end
+
   def handle_event({:test_finished, %ExUnit.Test{state: nil} = test}, config) do
     write_success(".", config)
     {:ok, config}
   end
 
-  def handle_event({:test_started, _test}, config) do
-    # if config.trace, do: IO.write "  * #{trace_test_name test}"
+  def handle_event({:test_finished, %ExUnit.Test{state: {:skip, _}} = test}, config) do
+    write_warning("*", config)
     {:ok, config}
   end
 
-  def handle_event({:test_finished, %ExUnit.Test{state: {:skip, _}} = test}, config) do
-    write_warning("*", config)
+  def handle_event({:test_finished, %ExUnit.Test{state: {:invalid, _}} = test}, config) do
+    write_warning("?", config)
     {:ok, config}
   end
 

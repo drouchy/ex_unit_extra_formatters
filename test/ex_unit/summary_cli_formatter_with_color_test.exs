@@ -27,6 +27,14 @@ defmodule ExUnit.SummaryCLIFormatterWithColorsTest do
     assert output == "\e[33m*\e[0m"
   end
 
+  test "writes an yellow question mark for an invalid" do
+    output = capture_io fn ->
+      Formatter.handle_event({:test_finished, %ExUnit.Test{state: {:invalid, nil}}}, default_config)
+    end
+
+    assert output == "\e[33m?\e[0m"
+  end
+
   test "writes a red F for a failure" do
     output = capture_io fn ->
       Formatter.handle_event({:test_finished, %ExUnit.Test{state: {:failed, nil}}}, default_config)
